@@ -123,7 +123,7 @@ app.get('/submit-name/:name', function (req, res) //Send the data (name) as a pa
 {
    //Get the name from the request object
    var name = req.params.name; //extract the names from the request
-   names.push(names);
+   names.push(name);
    //JSON: JavaScript Object Notation used for converting javascript objects into string
    res.send(JSON.stringify(names)); //Convert Javascript objects array into string.
     
