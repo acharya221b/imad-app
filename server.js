@@ -119,10 +119,13 @@ app.get('/ui/madi.png', function (req, res) {
 });
 
 var names = [];
-app.get('/submit-name/:name', function (req, res) //Send the data (name) as a part of the url object 
+app.get('/submit-name', function (req, res) //Send the data (name) as a part of the url object 
 {
+   /*We can also send data as a query parameter. The data will be the bit of the URL after the '?'  
+   URL: /submit-name?name=xxxxx To extract 'xxxx' from the URL use req.query.name instead of req.params.name and also remove /:name from the above line /submit-name/:name*/
+   
    //Get the name from the request object
-   var name = req.params.name; //extract the names from the request
+   var name = req.query.name; //extract the names from the request
    names.push(name);
    //JSON: JavaScript Object Notation used for converting javascript objects into string
    res.send(JSON.stringify(names)); //Convert Javascript objects array into string.
