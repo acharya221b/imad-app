@@ -118,6 +118,17 @@ app.get('/ui/madi.png', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'madi.png'));
 });
 
+var names = [];
+app.get('/submit-name/:name', function (req, res) //Send the data (name) as a part of the url object 
+{
+   //Get the name from the request object
+   var name = req.params.name; //extract the names from the request
+   names.push(names);
+   //JSON: JavaScript Object Notation used for converting javascript objects into string
+   res.send(JSON.stringify(names)); //Convert Javascript objects array into string.
+    
+});
+
 app.get('/:articleName', function(req, res) {
 	
 	//articleName == articleOne
