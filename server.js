@@ -15,7 +15,7 @@ var app = express();
 app.use(morgan('combined'));
 
 var articles = {
-    articleOne: {
+    'article-one': {
     title: 'Article One | Manasi Acharya',
     heading: 'Article One',
     date: '19th Aug, 2017',
