@@ -170,14 +170,14 @@ app.get('/submit-name', function (req, res) //Send the data (name) as a part of 
     
 });
 
-app.get('/:articleName', function(req, res) {
+/* app.get('/:articleName', function(req, res) {
 	
 	//articleName == articleOne
 	//articles[articleName] == {} content object for article one
 	
 	var articleName = req.params.articleName;
 	res.send(createTemplate(articles[articleName]));
-});
+}); */
 
 /*
 app.get('/article-one', function(req, res) {
