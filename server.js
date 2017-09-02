@@ -113,8 +113,8 @@ app.get('/', function (req, res) {
 
 function hash (input, salt) {
     var hashed = crypto.pbkdf2Sync(input, salt, 10000, 512, 'sha512');
-    return hashed.toString('hex');
-    //pbkdf2Sync is a function in default nodejs library crypto
+    return ["pbkdf2", "10000", salt, hashed.toString('hex')].join('$');
+    //pbkdf2Sync is a function in default nodejs library crypto. It stands for Passwd based key derivation fn
     //crypto.pbkdf2Sync(password,salt,iterations,keylen,digest);
 }
 
@@ -140,7 +140,7 @@ app.get('/test-db', function (req, res) {
 var counter=0;
 app.get('/counter', function (req, res) {
     counter = counter + 1;
-    res.send(counter.toString())
+    res.send(counter.toString());
 });
 
 app.get('/ui/style.css', function (req, res) {
