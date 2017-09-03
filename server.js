@@ -18,7 +18,7 @@ var app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.json()); //for json content for every incoming request
 app.use(session({           //Tell express to use session library
-    secret: 'someRandomSecretValue' //To encrypt the cookies
+    secret: 'someRandomSecretValue', //To encrypt the cookies
     cookie: {maxAge: 1000*60*60*24*30}      //The max age is in millisecs. The cookies will last for 1 month in this case
 }));
 
@@ -184,7 +184,7 @@ app.get('/check-login', function (req, res) {
    if(req.session && req.session.auth && req.session.auth.userId) {
        res.send('You are logged in: ' + req.session.auth.userId.toString());
    } else {
-       req.send('You are not logged in');
+       res.send('You are not logged in');
    }
     
 });  //To test that the session object is created
