@@ -4,6 +4,7 @@ var path = require('path');
 var Pool = require('pg').Pool;
 var crypto = require('crypto');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 var config = {
     user: 'acharya221b',
     database: 'acharya221b',
@@ -16,6 +17,10 @@ var config = {
 var app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.json()); //for json content for every incoming request
+app.use(session({           //Tell express to use session library
+    secret: 'someRandomSecretValue' //To encrypt the cookies
+    cookie: {maxAge: 1000*60*60*24*30}      //The max age is in millisecs. The cookies will last for 1 month in this case
+}));
 
 var articles = {
     articleOne: {
@@ -156,7 +161,15 @@ app.post('/login', function (req, res) {
               var salt = dbString.split('$')[2];
               var hashedPassword = hash(password, salt); //Creating a hash based on the password submitted and original salt
               if(hashedPassword === dbString) {
+              //Set the session
+              req.session.auth = {userId: result.rows[0].id}; //to create session object
+              //Set cookie with a session id
+              //internally, on the server side, it maps the session id to an object
+              //The object is, {auth: {userId}}
+              
+              
               res.send('Credentials Correct!');
+              
               } else {
                   res.send(403).send('username/password is invalid');
               }
@@ -166,6 +179,15 @@ app.post('/login', function (req, res) {
    });
     
 });
+
+app.get('/check-login', function (req, res) {
+   if(req.session && req.session.auth && req.session.auth.userId) {
+       res.send('You are logged in: ' + req.session.auth.userId.toString());
+   } else {
+       req.send('You are not logged in');
+   }
+    
+});  //To test that the session object is created
 
 var pool = new Pool(config);
 app.get('/test-db', function (req, res) {
